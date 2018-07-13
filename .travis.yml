@@ -30,11 +30,9 @@ before_script:
     - docker push "$FULLIMAGE"
 
 script:
-    - docker run -i $IMAGE  > result-alpine3
-    - docker run -i nginx_alpine3  2> result-nginx-alpine3
+    - docker run -i $FULLIMAGE  > result-alpine3
     - echo "==> Validating the test results..."
-    - sh -c "[ -s result-alpine3             ]"
-    - sh -c "[ -s result-nginx-alpine3     ]"
+    - sh -c "[ -s result-alpine3 ]"
 
 after_script:
     - docker images
