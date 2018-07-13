@@ -1,0 +1,40 @@
+sudo: true
+
+services:
+    - docker
+
+before_install:
+    - docker info
+    - docker version
+
+env:
+  global:
+    - VERSION: "1.9.0"
+    - BUILD_DATE: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
+    - REPO: $DOCKER_USERNAME
+    - TAG_MINOR: ${VERSION%.*}
+    - TAG_MAJOR: ${VERSION%%.*}
+    - GIT_REPO_LINK: "https://github.com/OlegGorj/ansible-on-docker.git#master"
+    - IMAGE: "ansible"
+    - TAG: "latest"
+    - FULLIMAGE: $REPO/$IMAGE:$TAG
+
+branches:
+  only:
+    - master
+
+before_script:
+    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    - docker build -t "$FULLIMAGE" ./alpine3
+    - docker inspect "$FULLIMAGE"
+    - docker push "$FULLIMAGE"
+
+script:
+    - docker run -i $IMAGE  > result-alpine3
+    - docker run -i nginx_alpine3  2> result-nginx-alpine3
+    - echo "==> Validating the test results..."
+    - sh -c "[ -s result-alpine3             ]"
+    - sh -c "[ -s result-nginx-alpine3     ]"
+
+after_script:
+    - docker images
