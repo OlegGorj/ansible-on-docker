@@ -62,3 +62,7 @@ Version provided:
 
 
 ---
+
+
+## License
++[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FOlegGorj%2Fansible-on-docker.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FOlegGorj%2Fansible-on-docker?ref=badge_large)
