@@ -8,6 +8,23 @@
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FOlegGorj%2Fansible-on-docker.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FOlegGorj%2Fansible-on-docker?ref=badge_shield)
 
 # Docker image of Ansible
-Docker base image of Ansible configuration management server
+
+Docker base image of Ansible configuration management server.
 
 This repository contains Dockerized Ansible, published to the public Docker Hub via automated build mechanism.
+
+## Summary
+
+Repository name in Docker Hub: **[OlegGorJ/ansible](https://hub.docker.com/r/OlegGorJ/ansible/)**
+
+This repository contains Dockerized [Ansible](https://github.com/ansible/ansible), published to the public [Docker Hub](https://hub.docker.com/) via **automated build** mechanism.
+
+
+
+## Configuration
+
+These are Docker images for [Ansible](https://github.com/ansible/ansible) software, installed in a selected Linux distributions.
+
+### Base OS
+
+Alpine (3).
