@@ -28,3 +28,38 @@ These are Docker images for [Ansible](https://github.com/ansible/ansible) softwa
 ### Base OS
 
 Alpine (3).
+
+### Ansible
+
+Version provided:
+
+  1. provides the most recent *stable* version of Ansible based on Alpine3; suitable for most people. This image is very light - less then 70Ms in total.
+
+
+## Here's how to use it
+
+  1. make sure you can access base image from Docker Hub `OlegGorJ/ansible:latest`.
+
+  2. put the following `Dockerfile` along with your playbook directory:
+
+  ```
+  FROM OlegGorJ/ansible:latest
+
+  # ==> Specify requirements filename;  default = "requirements.yml"
+  #ENV REQUIREMENTS  requirements.yml
+
+  # ==> Specify playbook filename;      default = "playbook.yml"
+  #ENV PLAYBOOK      playbook.yml
+
+  # ==> Specify inventory filename;     default = "/etc/ansible/hosts"
+  #ENV INVENTORY     inventory.ini
+
+  # ==> Executing Ansible (with a simple wrapper)...
+  RUN your-ansible-playbook-wrapper
+
+  ```
+
+  3. well, run `docker build .`
+
+
+---
