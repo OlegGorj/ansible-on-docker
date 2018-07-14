@@ -35,7 +35,7 @@ Version provided:
   1. provides the most recent *stable* version of Ansible based on Alpine3; suitable for most people. This image is very light - less then 70Ms in total.
 
 
-## Here's how to use it
+## Quick example to use it
 
   1. make sure you can access base image from Docker Hub `OlegGorJ/ansible:latest`.
 
@@ -60,9 +60,62 @@ Version provided:
 
   3. well, run `docker build .`
 
-
 ---
 
+## Usage
+
+Used mostly as a *base image* for configuring other software stack on some specified Linux distribution(s).
+
+To test an Ansible `playbook.yml` against a variety of Linux distributions, we may use [Vagrant](https://www.vagrantup.com/) as follows:
+
+```ruby
+# Vagrantfile
+
+Vagrant.configure(2) do |config|
+
+    # ==> Choose a Vagrant box to emulate Linux distribution...
+    config.vm.box = "maier/alpine-3.3.1-x86_64"
+
+
+    # ==> Executing Ansible...
+    config.vm.provision "ansible" do |ansible|
+        ansible.playbook = "playbook.yml"
+    end
+
+end
+```
+
+Virtual machines can emulate a variety of Linux distributions with good quality, at the cost of runtime overhead.
+
+
+Docker to be a rescue. Now, with these **oleggorj/ansible** series, we may test an Ansible `playbook.yml` against a variety of Linux distributions as follows:
+
+
+```dockerfile
+# Dockerfile
+
+# ==> Choose a base image to emulate Linux distribution...
+FROM williamyeh/ansible:alpine3
+
+# ==> Copying Ansible playbook...
+WORKDIR /tmp
+COPY  .  /tmp
+
+# ==> Creating inventory file...
+RUN echo localhost > inventory
+
+# ==> Executing Ansible...
+RUN ansible-playbook -i inventory playbook.yml \
+      --connection=local --sudo
+```
+
+
+With Docker, we can test any Ansible playbook against any version of any Linux distribution without the help of Vagrant. More lightweight, and more portable across IaaS, PaaS, and even CaaS (Container as a Service) providers!
+
+If better OS emulation (virtualization) isn't required, the Docker approach (containerization) should give you a more efficient Ansible experience.
+
+
+---
 
 ## License
 +[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FOlegGorj%2Fansible-on-docker.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FOlegGorj%2Fansible-on-docker?ref=badge_large)
